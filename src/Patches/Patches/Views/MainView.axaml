@@ -6,11 +6,71 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Patches.Views.MainView"
              x:DataType="vm:MainViewModel">
-  <Design.DataContext>
-    <!-- This only sets the DataContext for the previewer in an IDE,
-         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-    <vm:MainViewModel />
-  </Design.DataContext>
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainViewModel />
+    </Design.DataContext>
 
-  <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <Grid RowDefinitions="Auto, *, Auto"
+          x:Name="Root">
+
+        <TextBlock Grid.Row="0" Classes="h1" Text="WorkDays" />
+
+        <ScrollViewer Grid.Row="1"
+                      HorizontalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding WorkDays}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <!-- The ItemTemplate defines how each item should be represented -->
+                    <DataTemplate DataType="vm:WorkDayViewModel">
+                        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
+                              ColumnDefinitions= "Auto">
+                            
+                            <TextBlock Grid.Row="0" Grid.Column="0"
+                                       Text="Date" />
+                            <CalendarDatePicker Grid.Row="1" Grid.Column="0"
+                                        SelectedDate="{Binding Date}" />
+
+                            <TextBlock Grid.Row="2" Grid.Column="0"
+                                       Text="Time In" />
+                            <TimePicker Grid.Row="3" Grid.Column="0"
+                                        ClockIdentifier="12HourClock"
+                                        SelectedTime="{Binding TimeIn}" />
+
+                            <TextBlock Grid.Row="4" Grid.Column="0"
+                                       Text="Lunch Start" />
+                            <TimePicker Grid.Row="5" Grid.Column="0"
+                                        ClockIdentifier="12HourClock"
+                                        SelectedTime="{Binding LunchStart}" />
+
+                            <TextBlock Grid.Row="6" Grid.Column="0"
+                                       Text="Lunch Stop" />
+                            <TimePicker Grid.Row="7" Grid.Column="0"
+                                        ClockIdentifier="12HourClock"
+                                        SelectedTime="{Binding LunchStop}" />
+                                        
+                            <TextBlock Grid.Row="8" Grid.Column="0"
+                                       Text="Time Out" />
+                            <TimePicker Grid.Row="9" Grid.Column="0"
+                                        ClockIdentifier="12HourClock"
+                                        SelectedTime="{Binding TimeOut}" />
+
+                            <Button Grid.Row="10" Grid.Column="0"
+                                    Command="{Binding #Root.((vm:MainViewModel)DataContext).RemoveWorkDayCommand}"
+                                    CommandParameter="{Binding .}"
+                                    Content="Delete" />
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <Button Grid.Row="2" Command="{Binding AddWorkDayCommand}">Add work day</Button>
+    </Grid>
+
 </UserControl>

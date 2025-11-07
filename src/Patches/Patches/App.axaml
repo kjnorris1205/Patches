@@ -11,5 +11,18 @@
 
     <Application.Styles>
         <FluentTheme />
+
+        <!--  Our header Style  -->
+        <Style Selector="TextBlock.h1">
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+
+        <!--  These styles add some useful feedback for the user  -->
+        <Style Selector="TimePicker:pointerover">
+            <Setter Property="Background" Value="{DynamicResource SystemAccentColorLight3}" />
+        </Style>
+
     </Application.Styles>
 </Application>
